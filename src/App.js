@@ -17,7 +17,7 @@ import Register from "./Components/Register";
 import ThisSemester from "./Components/ThisSemester";
 import CompletedCourses from "./Components/CompletedCourses";
 import Messages from "./Components/Messages";
-import {notify_of_api_failure, url_base} from "./helpers";
+import {notifyOfAPIFailure, url_base} from "./helpers";
 
 const {Header, Footer, Content} = Layout;
 axios.defaults.timeout = 5000
@@ -48,7 +48,7 @@ class App extends React.Component {
         axios.post(`${url_base}authentication/logout/`,
             {},
             {'headers': {Authorization: `Token ${this.state.token}`}}
-        ).catch(notify_of_api_failure);
+        ).catch(notifyOfAPIFailure);
     };
 
     render() {

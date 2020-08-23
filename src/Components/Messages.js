@@ -5,7 +5,7 @@ import DisplayTemplate from "./DisplayTemplate";
 import {Button, notification} from "antd";
 
 import axios from 'axios';
-import {notify_of_api_failure, url_base} from "../helpers";
+import {notifyOfAPIFailure, url_base} from "../helpers";
 
 
 class Messages extends DisplayTemplate {
@@ -24,7 +24,7 @@ class Messages extends DisplayTemplate {
                 message: 'Messages cleared',
                 placement: 'bottomLeft'
             })
-        ).catch(notify_of_api_failure);
+        ).catch(notifyOfAPIFailure);
         this.props.history.push('/');
     }
 

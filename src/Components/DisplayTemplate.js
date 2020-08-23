@@ -1,7 +1,7 @@
 import React from 'react';
 import {Divider, Spin, List} from "antd";
 import axios from 'axios';
-import {notify_of_api_failure} from "../helpers";
+import {notifyOfAPIFailure} from "../helpers";
 
 class ThisSemester extends React.Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class ThisSemester extends React.Component {
                 data: this.dataProcessor(response.data),
                 dataReady: true,
             });
-        }).catch(notify_of_api_failure);
+        }).catch(notifyOfAPIFailure);
     }
 
 

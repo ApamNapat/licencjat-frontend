@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Spin, Form, Select, notification} from "antd";
 import axios from 'axios';
-import {notify_of_api_failure, url_base} from "../helpers";
+import {notifyOfAPIFailure, url_base} from "../helpers";
 
 
 class TimetableSetter extends React.Component {
@@ -23,7 +23,7 @@ class TimetableSetter extends React.Component {
                 validActions: response.data,
                 dataReady: true,
             });
-        }).catch(notify_of_api_failure);
+        }).catch(notifyOfAPIFailure);
     }
 
     getForm = (data) => {
@@ -36,7 +36,7 @@ class TimetableSetter extends React.Component {
                             value={action.name}>{`${action.name}${action.semester !== null ? ` (Semester: ${action.semester})` : ""}`}
                         </Select.Option>)}
                 </Select>
-            </Form.Item>)
+            </Form.Item>);
     }
 
     postActions = (data) => {
@@ -52,7 +52,7 @@ class TimetableSetter extends React.Component {
                 description: response.data.message,
                 placement: 'bottomLeft'
             });
-        }).catch(notify_of_api_failure);
+        }).catch(notifyOfAPIFailure);
     }
 
 

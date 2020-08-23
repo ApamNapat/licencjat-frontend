@@ -7,7 +7,7 @@ class TimeTracker extends React.Component {
         this.state = {
             hour: date.getUTCHours(),
             minute: date.getUTCMinutes().toString(),
-            second: date.getUTCSeconds().toString()
+            second: date.getUTCSeconds().toString(),
         };
     }
 
@@ -25,7 +25,7 @@ class TimeTracker extends React.Component {
         this.setState({
             hour: date.getUTCHours(),
             minute: date.getUTCMinutes().toString(),
-            second: date.getUTCSeconds().toString()
+            second: date.getUTCSeconds().toString(),
         });
     }
 

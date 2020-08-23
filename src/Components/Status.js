@@ -1,7 +1,7 @@
 import React from 'react';
 import {Spin, Descriptions} from "antd";
 import axios from 'axios';
-import {notify_of_api_failure, url_base} from "../helpers";
+import {notifyOfAPIFailure, url_base} from "../helpers";
 
 
 class Status extends React.Component {
@@ -21,7 +21,7 @@ class Status extends React.Component {
             {'headers': {Authorization: `Token ${this.state.token}`}}
         ).then((response) => {
             this.setState({userData: response.data, dataReady: true, name: response.data.user.username});
-        }).catch(notify_of_api_failure);
+        }).catch(notifyOfAPIFailure);
 
     }
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import {Button, Form, Row, Col, Input} from "antd";
+import {Button, Form, Row, Col, Input, notification} from "antd";
 import axios from 'axios';
-import {notify_of_api_failure, url_base} from "../helpers";
+import {notifyOfAPIFailure, url_base} from "../helpers";
 
 
 const postLogin = (data, loginProcessor) => {
@@ -11,9 +11,22 @@ const postLogin = (data, loginProcessor) => {
                 password: data.password1
             }).then((response) => {
                 loginProcessor(response.data.token, response.data.pk);
-            }).catch(notify_of_api_failure);
+            }).catch(notifyOfAPIFailure);
         }
-    ).catch(notify_of_api_failure);
+    ).catch((error) => {
+        if (error.response !== undefined && error.response.status === 400) {
+            let password_errors = error.response.data.password1 || [];
+            let username_errors = error.response.data.username || [];
+            let errors = username_errors.concat(password_errors).join(' ');
+            notification.open({
+                message: 'Unable to register',
+                description: errors,
+                placement: 'bottomLeft',
+            });
+        } else {
+            notifyOfAPIFailure(error);
+        }
+    });
 }
 
 const Register = (props) => {
@@ -24,7 +37,6 @@ const Register = (props) => {
                     size='medium'
                     name="register"
                     onFinish={(data) => postLogin(data, props.loginProcessor)}
-                    onFinishFailed={(errorInfo) => console.log('Failed:', errorInfo)}
                 >
                     <Form.Item
                         label="Username"
@@ -51,7 +63,6 @@ const Register = (props) => {
                     >
                         <Input.Password/>
                     </Form.Item>
-
 
                     <Form.Item
                         label="Confirm Password"
