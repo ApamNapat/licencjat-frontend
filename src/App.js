@@ -17,7 +17,7 @@ import Register from "./Components/Register";
 import ThisSemester from "./Components/ThisSemester";
 import CompletedCourses from "./Components/CompletedCourses";
 import Messages from "./Components/Messages";
-import {notifyOfAPIFailure, url_base} from "./helpers";
+import {notifyOfAPIFailure, urlBase} from "./helpers";
 
 const {Header, Footer, Content} = Layout;
 axios.defaults.timeout = 5000
@@ -45,7 +45,7 @@ class App extends React.Component {
         localStorage.removeItem('token');
         localStorage.removeItem('pk');
         this.setState({'token': null, 'loggedIn': false, 'pk': null});
-        axios.post(`${url_base}authentication/logout/`,
+        axios.post(`${urlBase}authentication/logout/`,
             {},
             {'headers': {Authorization: `Token ${this.state.token}`}}
         ).catch(notifyOfAPIFailure);

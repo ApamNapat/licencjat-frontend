@@ -8,4 +8,4 @@ export const notifyOfAPIFailure = (error) => {
     });
 };
 
-export const url_base = 'http://localhost:8000/';
+export const urlBase = 'http://localhost:8000/';

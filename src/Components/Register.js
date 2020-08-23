@@ -1,12 +1,12 @@
 import React from 'react';
 import {Button, Form, Row, Col, Input, notification} from "antd";
 import axios from 'axios';
-import {notifyOfAPIFailure, url_base} from "../helpers";
+import {notifyOfAPIFailure, urlBase} from "../helpers";
 
 
 const postLogin = (data, loginProcessor) => {
-    axios.post(`${url_base}authentication/registration/`, data).then((_) => {
-            axios.post(`${url_base}get_token/`, {
+    axios.post(`${urlBase}authentication/registration/`, data).then((_) => {
+            axios.post(`${urlBase}get_token/`, {
                 username: data.username,
                 password: data.password1
             }).then((response) => {

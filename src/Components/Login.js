@@ -1,11 +1,11 @@
 import React from 'react';
 import {Form, Input, Button, Row, Col, notification} from 'antd';
 import axios from 'axios';
-import {notifyOfAPIFailure, url_base} from "../helpers";
+import {notifyOfAPIFailure, urlBase} from "../helpers";
 
 
 const postLogin = (data, loginProcessor) => {
-    axios.post(`${url_base}get_token/`, data).then((response) => {
+    axios.post(`${urlBase}get_token/`, data).then((response) => {
         loginProcessor(response.data.token, response.data.pk);
     }).catch((error) => {
         if (error.response !== undefined && error.response.status === 400) {

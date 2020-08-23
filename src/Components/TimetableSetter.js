@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Spin, Form, Select, notification} from "antd";
 import axios from 'axios';
-import {notifyOfAPIFailure, url_base} from "../helpers";
+import {notifyOfAPIFailure, urlBase} from "../helpers";
 
 
 class TimetableSetter extends React.Component {
@@ -16,7 +16,7 @@ class TimetableSetter extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`${url_base}get_valid_actions/${this.state.pk}/`,
+        axios.get(`${urlBase}get_valid_actions/${this.state.pk}/`,
             {'headers': {Authorization: `Token ${this.state.token}`}}
         ).then((response) => {
             this.setState({
@@ -44,7 +44,7 @@ class TimetableSetter extends React.Component {
         for (let key in data) {
             res.push({action: data[key], hour: key})
         }
-        axios.post(`${url_base}set_timetable/${this.state.pk}/`, res,
+        axios.post(`${urlBase}set_timetable/${this.state.pk}/`, res,
             {'headers': {Authorization: `Token ${this.state.token}`}}
         ).then((response) => {
             notification.open({
