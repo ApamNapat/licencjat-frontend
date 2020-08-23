@@ -1,6 +1,7 @@
 import React from 'react';
 import {Divider, Spin, List} from "antd";
 import axios from 'axios';
+import {notify_of_api_failure} from "../helpers";
 
 class ThisSemester extends React.Component {
     constructor(props) {
@@ -11,31 +12,28 @@ class ThisSemester extends React.Component {
             token: props.token,
             pk: props.pk,
         }
-        this.url = ""
-        this.title = ""
+        this.url = "";
+        this.title = "";
     }
 
-    dataProcessor = (data) => {
+    dataProcessor = (_) => {
         return [];
     }
 
     componentDidMount() {
-        axios.get(this.url,
-            {
-                'headers': {
-                    Authorization: `Token ${this.state.token}`
-                }
-            }).then((response) => {
+        axios.get(this.url, {
+            'headers': {Authorization: `Token ${this.state.token}`}
+        }).then((response) => {
             this.setState({
                 data: this.dataProcessor(response.data),
                 dataReady: true,
             });
-        }).catch((error) => console.log(error));
+        }).catch(notify_of_api_failure);
     }
 
 
     render = () => {
-        return this.state.dataReady ?
+        return (this.state.dataReady ?
             <div><Divider orientation="left">{this.title}</Divider>
                 <List
                     bordered
@@ -46,7 +44,7 @@ class ThisSemester extends React.Component {
                         </List.Item>
                     )}
                 />{this.extra !== undefined && this.extra}</div>
-            : <Spin size="large"/>;
+            : <Spin size="large"/>);
     }
 }
 

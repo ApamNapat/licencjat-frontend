@@ -1,14 +1,13 @@
 import React from 'react';
 import {Form, Input, Button, Row, Col} from 'antd';
 import axios from 'axios';
-
+import {notify_of_api_failure, url_base} from "../helpers";
 
 
 const postLogin = (data, loginProcessor) => {
-    axios.post('http://localhost:8000/get_token/', data).then((response) => {
-        console.log(response);
+    axios.post(`${url_base}get_token/`, data).then((response) => {
         loginProcessor(response.data.token, response.data.pk);
-    }).catch((error) => console.log(error));
+    }).catch(notify_of_api_failure);
 }
 
 const Login = (props) => {

@@ -1,10 +1,11 @@
 import DisplayTemplate from "./DisplayTemplate";
+import {url_base} from "../helpers";
 
 
 class Abilities extends DisplayTemplate {
     constructor(props) {
         super(props);
-        this.url = `http://localhost:8000/abilities/${this.state.pk}/`;
+        this.url = `${url_base}abilities/${this.state.pk}/`;
         this.title = "Your Abilities";
     }
 

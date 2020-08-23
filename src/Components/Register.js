@@ -1,19 +1,19 @@
 import React from 'react';
 import {Button, Form, Row, Col, Input} from "antd";
 import axios from 'axios';
+import {notify_of_api_failure, url_base} from "../helpers";
 
 
 const postLogin = (data, loginProcessor) => {
-    axios.post('http://localhost:8000/authentication/registration/', data).then((response) => {
-            axios.post('http://localhost:8000/get_token/', {
+    axios.post(`${url_base}authentication/registration/`, data).then((_) => {
+            axios.post(`${url_base}get_token/`, {
                 username: data.username,
                 password: data.password1
             }).then((response) => {
-                console.log(response);
                 loginProcessor(response.data.token, response.data.pk);
-            }).catch((error) => console.log(error));
+            }).catch(notify_of_api_failure);
         }
-    ).catch((error) => console.log(error));
+    ).catch(notify_of_api_failure);
 }
 
 const Register = (props) => {

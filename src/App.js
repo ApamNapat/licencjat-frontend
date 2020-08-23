@@ -1,12 +1,11 @@
 import React from 'react';
 import './App.css';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-} from "react-router-dom";
-import Login from "./Components/Login";
+
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import {Layout} from 'antd';
+import axios from 'axios';
+
+import Login from "./Components/Login";
 import Status from "./Components/Status";
 import TimeTracker from "./Components/TimeTracker";
 import CustomMenu from "./Containers/CustomMenu";
@@ -18,10 +17,10 @@ import Register from "./Components/Register";
 import ThisSemester from "./Components/ThisSemester";
 import CompletedCourses from "./Components/CompletedCourses";
 import Messages from "./Components/Messages";
-import axios from 'axios';
+import {notify_of_api_failure, url_base} from "./helpers";
 
 const {Header, Footer, Content} = Layout;
-
+axios.defaults.timeout = 5000
 
 
 class App extends React.Component {
@@ -32,7 +31,7 @@ class App extends React.Component {
         this.state = {
             loggedIn: token !== null,
             token: token,
-            pk: pk
+            pk: pk,
         };
     }
 
@@ -43,18 +42,13 @@ class App extends React.Component {
     };
 
     processLogout = () => {
-        axios.post('http://localhost:8000/authentication/logout/',
-            {},
-            {
-                'headers': {
-                    Authorization: `Token ${this.state.token}`
-                }
-            }).then((response) => {
-            console.log(response);
-        });
-        localStorage.removeItem('token')
-        localStorage.removeItem('pk')
+        localStorage.removeItem('token');
+        localStorage.removeItem('pk');
         this.setState({'token': null, 'loggedIn': false, 'pk': null});
+        axios.post(`${url_base}authentication/logout/`,
+            {},
+            {'headers': {Authorization: `Token ${this.state.token}`}}
+        ).catch(notify_of_api_failure);
     };
 
     render() {

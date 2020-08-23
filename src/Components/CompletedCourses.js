@@ -1,10 +1,11 @@
 import DisplayTemplate from "./DisplayTemplate";
+import {url_base} from "../helpers";
 
 
 class CompletedCourses extends DisplayTemplate {
     constructor(props) {
         super(props);
-        this.url = `http://localhost:8000/courses/${this.state.pk}/`;
+        this.url = `${url_base}courses/${this.state.pk}/`;
         this.title = "Courses you have completed";
     }
 

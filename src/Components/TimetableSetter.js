@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Spin, Form, Select, notification} from "antd";
 import axios from 'axios';
+import {notify_of_api_failure, url_base} from "../helpers";
 
 
 class TimetableSetter extends React.Component {
@@ -15,25 +16,25 @@ class TimetableSetter extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:8000/get_valid_actions/${this.state.pk}/`,
-            {
-                'headers': {
-                    Authorization: `Token ${this.state.token}`
-                }
-            }).then((response) => {
-            console.log(response.data);
+        axios.get(`${url_base}get_valid_actions/${this.state.pk}/`,
+            {'headers': {Authorization: `Token ${this.state.token}`}}
+        ).then((response) => {
             this.setState({
                 validActions: response.data,
                 dataReady: true,
             });
-        }).catch((error) => console.log(error));
+        }).catch(notify_of_api_failure);
     }
 
     getForm = (data) => {
         return data.map((elem, index) =>
             <Form.Item key={index} label={`${elem.hour} o'clock`} defaultValue='Sleep' name={elem.hour}>
                 <Select>
-                    {elem.actions.map((action, i) => <Select.Option key={i} value={action}>{action}</Select.Option>)}
+                    {elem.actions.map((action, i) =>
+                        <Select.Option
+                            key={i}
+                            value={action.name}>{`${action.name}${action.semester !== null ? ` (Semester: ${action.semester})` : ""}`}
+                        </Select.Option>)}
                 </Select>
             </Form.Item>)
     }
@@ -43,17 +44,15 @@ class TimetableSetter extends React.Component {
         for (let key in data) {
             res.push({action: data[key], hour: key})
         }
-        axios.post(`http://localhost:8000/set_timetable/${this.state.pk}/`, res, {
-            'headers': {
-                Authorization: `Token ${this.state.token}`
-            }
-        }).then((response) => {
+        axios.post(`${url_base}set_timetable/${this.state.pk}/`, res,
+            {'headers': {Authorization: `Token ${this.state.token}`}}
+        ).then((response) => {
             notification.open({
                 message: 'Timetable processed',
                 description: response.data.message,
                 placement: 'bottomLeft'
             });
-        }).catch((error) => console.log(error));
+        }).catch(notify_of_api_failure);
     }
 
 

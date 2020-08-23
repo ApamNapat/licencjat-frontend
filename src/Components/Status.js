@@ -1,6 +1,7 @@
 import React from 'react';
-import {Spin, Descriptions, notification} from "antd";
+import {Spin, Descriptions} from "antd";
 import axios from 'axios';
+import {notify_of_api_failure, url_base} from "../helpers";
 
 
 class Status extends React.Component {
@@ -16,19 +17,11 @@ class Status extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:8000/userdata/${this.state.pk}/`,
-            {
-                'headers': {
-                    Authorization: `Token ${this.state.token}`
-                }
-            }).then((response) => {
-            console.log(response.data);
+        axios.get(`${url_base}userdata/${this.state.pk}/`,
+            {'headers': {Authorization: `Token ${this.state.token}`}}
+        ).then((response) => {
             this.setState({userData: response.data, dataReady: true, name: response.data.user.username});
-        }).catch((error) =>
-            notification.open({
-                message: 'Something went wrong fetching data',
-                placement: 'bottomLeft'
-            }));
+        }).catch(notify_of_api_failure);
 
     }
 
@@ -44,8 +37,7 @@ class Status extends React.Component {
                 <Descriptions.Item label="Algorithms">{this.state.userData.algorithms}</Descriptions.Item>
                 <Descriptions.Item label="Work Experience">{this.state.userData.work_experience}</Descriptions.Item>
                 {this.state.userData.failed_last_semester
-                    ? <Descriptions.Item label="Failed Semester">You have failed the last semester</Descriptions.Item>
-                    : <></>}
+                && <Descriptions.Item label="Failed Semester">You have failed the last semester</Descriptions.Item>}
             </Descriptions>
         )
 
