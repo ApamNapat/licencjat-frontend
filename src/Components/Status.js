@@ -27,7 +27,9 @@ class Status extends React.Component {
     render = () => {
         let userData = (
             <Descriptions title="User Info" column={4}>
-                <Descriptions.Item label="Semester" span={4}>{this.state.userData.semester}</Descriptions.Item>
+                <Descriptions.Item label="Semester">{this.state.userData.semester}</Descriptions.Item>
+                <Descriptions.Item label="Day">{this.state.userData.day}</Descriptions.Item>
+                <Descriptions.Item label="Hour" span={2}>{this.state.userData.hour}</Descriptions.Item>
                 <Descriptions.Item label="Energy">{this.state.userData.energy}</Descriptions.Item>
                 <Descriptions.Item label="Mood">{this.state.userData.mood}</Descriptions.Item>
                 <Descriptions.Item label="Cash" span={2}>{this.state.userData.cash}</Descriptions.Item>
@@ -35,8 +37,8 @@ class Status extends React.Component {
                 <Descriptions.Item label="Programming">{this.state.userData.programming}</Descriptions.Item>
                 <Descriptions.Item label="Algorithms">{this.state.userData.algorithms}</Descriptions.Item>
                 <Descriptions.Item label="Work Experience">{this.state.userData.work_experience}</Descriptions.Item>
-                {this.state.userData.failed_last_semester
-                && <Descriptions.Item label="Failed Semester">You have failed the last semester</Descriptions.Item>}
+                {this.state.userData.failed_a_semester
+                && <Descriptions.Item label="Failed Semester">You have failed a semester. Beware!</Descriptions.Item>}
             </Descriptions>
         )
 

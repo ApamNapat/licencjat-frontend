@@ -42,6 +42,9 @@ class TimetableSetter extends React.Component {
     postActions = (data) => {
         let res = [];
         for (let key in data) {
+            if (data[key] === undefined) {
+                continue;
+            }
             res.push({action: data[key], hour: key})
         }
         axios.post(`${urlBase}set_timetable/${this.state.pk}/`, res,
@@ -64,32 +67,6 @@ class TimetableSetter extends React.Component {
                   }}
                   wrapperCol={{
                       span: 4,
-                  }}
-                  initialValues={{
-                      0: 'Sleep',
-                      1: 'Sleep',
-                      2: 'Sleep',
-                      3: 'Sleep',
-                      4: 'Sleep',
-                      5: 'Sleep',
-                      6: 'Sleep',
-                      7: 'Sleep',
-                      8: 'Sleep',
-                      9: 'Sleep',
-                      10: 'Sleep',
-                      11: 'Sleep',
-                      12: 'Sleep',
-                      13: 'Sleep',
-                      14: 'Sleep',
-                      15: 'Sleep',
-                      16: 'Sleep',
-                      17: 'Sleep',
-                      18: 'Sleep',
-                      19: 'Sleep',
-                      20: 'Sleep',
-                      21: 'Sleep',
-                      22: 'Sleep',
-                      23: 'Sleep',
                   }}
             >
                 {this.getForm(this.state.validActions)}
