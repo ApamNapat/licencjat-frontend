@@ -50,11 +50,19 @@ class TimetableSetter extends React.Component {
         axios.post(`${urlBase}set_timetable/${this.state.pk}/`, res,
             {'headers': {Authorization: `Token ${this.state.token}`}}
         ).then((response) => {
-            notification.open({
-                message: 'Timetable processed',
-                description: response.data.message,
-                placement: 'bottomLeft'
-            });
+            if (response.data.success) {
+                notification.open({
+                    message: 'Timetable processed',
+                    description: response.data.message,
+                    placement: 'bottomLeft'
+                });
+            } else {
+                notification.open({
+                    message: "Something didn't go quite right",
+                    description: 'You probably tried to set an action for a time that has already passed. Try reloading the page.',
+                    placement: 'bottomLeft'
+                });
+            }
         }).catch(notifyOfAPIFailure);
     }
 
